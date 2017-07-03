@@ -1,3 +1,7 @@
+/* Servo.h */
+#ifndef __SERVO_H__
+#define __SERVO_H__
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -57,3 +61,4 @@ class Servo{
 		void tracking(int ena_flag,cv::Point nowPoint,cv::Point targetPoint,double p,double i,double d);
 };
 
+#endif // __SERVO_H__

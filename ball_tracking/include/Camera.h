@@ -1,3 +1,7 @@
+/* Camera.h */
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -51,3 +55,4 @@ class Camera{
 		cv::Mat getImg(int cloneFlag);
 };
 
+#endif // __CAMERA_H__
