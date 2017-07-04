@@ -26,7 +26,7 @@ class BallDetect{
 		LabelingBS label;
 	public:
 		BallDetect(){
-		
+
 		}
 		void setting(int argMedian_size,int argMorpho_n,
 				int argMorpho=cv::MORPH_ERODE,
@@ -248,7 +248,7 @@ class BTS_param{
 			else if(k == 'a'){
 				//camera.lbuttoon_flag = 0;
 			}
-			else if(k == 'u'){
+			else if(k == 'u'){//Threshold UP
 				//camera.hue_range(20);
 				if(gray_threshold < 255){
 					gray_threshold++;
@@ -260,7 +260,7 @@ class BTS_param{
 					hue_threshold = 0;
 				}
 			}
-			else if(k == 'd'){
+			else if(k == 'd'){//Threshold Down
 				//camera.hue_range(20);
 				if(gray_threshold > 0){
 					gray_threshold--;
@@ -272,7 +272,7 @@ class BTS_param{
 					hue_threshold = 255;
 				}
 			}
-			else if(k == 'm'){
+			else if(k == 'm'){//modeChange
 				if(mode < 5)
 				{
 					mode++;
@@ -282,7 +282,7 @@ class BTS_param{
 				}
 				set_mode_flag = 1;
 			}
-			else if(k == 'p'){
+			else if(k == 'p'){//Image Drawing
 				if(print_mode < 2){
 					print_mode++;
 				}
@@ -290,7 +290,7 @@ class BTS_param{
 					print_mode = 0;
 				}
 			}
-			else if(k == 's'){
+			else if(k == 's'){//Staturation
 				if(sat_threshold_low < 125){
 					sat_threshold_low += 10;
 				}
@@ -298,7 +298,7 @@ class BTS_param{
 					sat_threshold_low = 0;
 				}
 			}
-			else if(k == 'v'){
+			else if(k == 'v'){//Value(明度)
 				if(light_threshold_low < 205){
 					light_threshold_low += 50;
 				}
@@ -306,9 +306,12 @@ class BTS_param{
 					light_threshold_low = 0;
 				}
 			}
-			else if(k == 'c'){
+			else if(k == 'c'){//pidの値変更
+				printf("kp = ");
 				cin >> kp;
+				printf("ki = ");
 				cin >> ki;
+				printf("kd = ");
 				cin >> kd;
 			}
 			else{
@@ -342,7 +345,7 @@ class BTS_param{
 				}
 			}
 			if(set_mode_flag == 1){
-				if(mode == 0){
+				if(mode == 0){//RGM
 					image_reduction_flag = 1;
 					set_camera_clone_flag = 1;
 					set_extraction_flag = 1;
@@ -357,7 +360,7 @@ class BTS_param{
 					image_not_flag = 0;
 					set_hard_labering_flag = 0;
 				}
-				else if(mode == 1){
+				else if(mode == 1){//GrayScale
 					image_reduction_flag = 1;
 					set_camera_clone_flag = 1;
 					set_extraction_flag = 1;
@@ -372,7 +375,7 @@ class BTS_param{
 					image_not_flag = 0;
 					set_hard_labering_flag = 0;
 				}
-				else if(mode == 2){
+				else if(mode == 2){//Binary
 					image_reduction_flag = 1;
 					set_camera_clone_flag = 1;
 					set_extraction_flag = 1;
@@ -387,7 +390,7 @@ class BTS_param{
 					image_not_flag = 1;
 					set_hard_labering_flag = 0;
 				}
-				else if(mode == 3){
+				else if(mode == 3){//HSB Binary
 					image_reduction_flag = 1;
 					set_camera_clone_flag = 1;
 					set_extraction_flag = 1;
@@ -402,7 +405,7 @@ class BTS_param{
 					image_not_flag = 0;
 					set_hard_labering_flag = 0;
 				}
-				else if(mode == 4){
+				else if(mode == 4){//HSV binary + Noise Filter
 					image_reduction_flag = 1;
 					set_camera_clone_flag = 1;
 					set_extraction_flag = 0;
@@ -415,7 +418,7 @@ class BTS_param{
 					image_not_flag = 0;
 					set_hard_labering_flag = 0;
 				}
-				else if(mode == 5){
+				else if(mode == 5){//HSV binary + Noise Filter + Image Drawing
 					filter_select = 4;
 					image_reduction_flag = 0;
 					set_camera_clone_flag = 1;
@@ -440,7 +443,7 @@ class BTS_param{
 					cv::cvtColor(camera_mt,camera_bin,CV_BGR2GRAY);
 					cv::resize(camera_bin,camera_bin,cv::Size(),0.5,0.5,cv::INTER_NEAREST);
 					if(image_not_flag){
-						camera_bin = ~camera_bin;	
+						camera_bin = ~camera_bin;
 					}
 				}
 			}
@@ -470,7 +473,7 @@ class BTS_param{
 						ballDet.labeling(camera_bin,1000,20,center,point1,point2);
 					//cv::rectangle(camera_mt, point1*2, point2*2, cv::Scalar(0, 0, 255));
 						servo.tracking(1,
-								center,
+								center,//対象の重心?
 								cv::Point(camera_bin.cols*0.5,camera_bin.rows*0.5),
 								kp,0,0);
 					}
@@ -481,10 +484,10 @@ class BTS_param{
 			else if(set_hard_labering_flag == 1){
 
 				//cout << "maxValue = " << maxValue << endl;
-				if(print_mode != 0){
-					camera_bin 
+				if(print_mode != 0){//Servo detect
+					camera_bin
 						= ballDet.labeling_hard_hist(camera_mt,&max_y_line,&maxValue,&max_x_line);
-					if((max_x_line != 0) && (max_y_line != 0)){ 
+					if((max_x_line != 0) && (max_y_line != 0)){
 						servo.tracking(1,
 								cv::Point(max_x_line,max_y_line),
 								cv::Point(camera_bin.cols*0.5,
@@ -497,7 +500,7 @@ class BTS_param{
 				else{
 				}
 			}
-			if(print_mode != 2){
+			if(print_mode != 2){//Image Draw
 				cv::imshow("camera_trans",camera_mt);
 				cv::imshow("camera",camera_bin);
 			}
@@ -539,7 +542,7 @@ int main(int argc,char **argv)
 	cv::Mat hsv_mt(480,640,CV_8UC3);
 	cv::Mat hsv_bin;
 	cv::Mat hist_bin;
-	
+
 	Camera camera;
 	Servo servo;
 	BallDetect ballDet;
@@ -550,7 +553,7 @@ int main(int argc,char **argv)
 	cv::Mat ave;
 	int i = 0;
 	//cv::setMouseCallback("camera",mouse_callback,(void*)&camera);
-	
+
 	ballTrack.init(camera,servo,ballDet);
 	while(1){
 		struct timespec start_val;
@@ -587,9 +590,8 @@ int main(int argc,char **argv)
 				,ballTrack.mode
 				,ballTrack.sat_threshold_low
 				,ballTrack.kp,ballTrack.ki,ballTrack.kd);
-		
+
 	}
 	cv::destroyAllWindows();
 	return 0;
 }
-
