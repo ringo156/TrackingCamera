@@ -33,8 +33,6 @@ class Servo{
 		int servo_count;
 		cv::Point2f nowPoint;
 		cv::Point2f targetPoint;
-		cv::Point2f targetPoint_add;
-		cv::Point2f targetPoint_total;
 		cv::Point2f devPoint;
 		cv::Point2f devPoint_sum;
 		cv::Point2f devPoint_d;

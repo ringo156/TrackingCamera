@@ -34,15 +34,15 @@ void Servo::setPeriod(int num ,int period){
 		return;
 	}
 	*(lwServo_addr+num) = period;
-}	
+}
 void Servo::setCompare(int num,int cmp){
 	if(num > 3){
 		return;
 	}
-	*(lwServo_addr+4+num) = cmp; 
+	*(lwServo_addr+4+num) = cmp;
 }
 void Servo::setDivider(int div){
-	*(lwServo_addr+8) = div; 
+	*(lwServo_addr+8) = div;
 }
 void Servo::angle(int num,double angle){
 	oldAngle[num] = nowAngle[num];
@@ -88,26 +88,7 @@ void Servo::tracking_loop(){
 
 			angle(SERVO_X,nowAngle[SERVO_X]);
 			angle(SERVO_Y,nowAngle[SERVO_Y]);
-			/*
-			if(servo_count <= 2){
-				servo_count ++;
-				targetPoint += targetPoint_add;
-			}
-			else{
-				servo_count = 0;
-				enable_servo_flag = 0;
-			}
-			*/
-			/*
-			int div = 1;
-			if((nowPoint.x - pData.x*div < 640) && (nowPoint.x - pData.x*div > 0)){
-				nowPoint.x = nowPoint.x - pData.x*div;
-			}
-			if((nowPoint.y - pData.y*div < 480) && (nowPoint.y - pData.y*div > 0)){
-				nowPoint.y = nowPoint.y - pData.y*div;
-			}
-			*/
-			//cout << devPoint << endl;
+
 			nanosleep(&treq,&trem);
 		}
 	}
@@ -115,15 +96,10 @@ void Servo::tracking_loop(){
 }
 void Servo::tracking(int ena_flag,cv::Point argNowPoint,cv::Point argTargetPoint,double argp,double argi,double argd){
 	nowPoint = argNowPoint;
-	targetPoint_total = argTargetPoint;
-	targetPoint_add = (targetPoint_total-nowPoint)*0.33;
-	//targetPoint = nowPoint + targetPoint_add;
-	targetPoint = targetPoint_total;
+	targetPoint = argTargetPoint;
 	servo_count = 0;
 	kp = argp;
 	ki = argi;
 	kd = argd;
 	enable_servo_flag = ena_flag;
 }
-
-

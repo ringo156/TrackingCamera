@@ -473,8 +473,8 @@ class BTS_param{
 						ballDet.labeling(camera_bin,1000,20,center,point1,point2);
 					//cv::rectangle(camera_mt, point1*2, point2*2, cv::Scalar(0, 0, 255));
 						servo.tracking(1,
-								center,//対象の重心?
-								cv::Point(camera_bin.cols*0.5,camera_bin.rows*0.5),
+								center,//対象の重心(ターゲット)
+								cv::Point(camera_bin.cols*0.5,camera_bin.rows*0.5),//中心
 								kp,0,0);
 					}
 					else {
