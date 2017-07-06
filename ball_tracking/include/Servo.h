@@ -18,11 +18,13 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
+#include "Fuzzy_tools.h"
 using namespace boost;
 using namespace std;
 
 class Servo{
 	private:
+		Fuzzy fuzzy;
 		void *lwServo_base;
 		int fd;
 		volatile uint16_t *lwServo_addr;

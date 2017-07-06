@@ -70,7 +70,9 @@ void Servo::tracking_loop(){
 			if((nowPoint.x == -1) || (nowPoint.y == -1)){
 				return;
 			}
-			devPoint = nowPoint - targetPoint;
+			devPoint = nowPoint - targetPoint;//差の計算
+			double res = cv::norm(devPoint);
+			kp = fuzzy.toKP(res);//kpの値を更新する
 			/*
 			if((devPoint_log-devPoint_d).inside(cv::Rect(-320,-240,320,240))){
 				devPoint_d = devPoint_log - devPoint_d;
