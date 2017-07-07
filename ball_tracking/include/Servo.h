@@ -15,6 +15,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <iostream>
 #include <stdint.h>
+#include <fstream>
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -40,6 +41,7 @@ class Servo{
 		cv::Point2f devPoint_sum;
 		cv::Point2f devPoint_d;
 		cv::Point2f devPoint_log;
+		cv::Point2f pData;
 
 		double kp;
 		double ki;

@@ -519,6 +519,7 @@ class BTS_param{
 		void init(Camera &camera,Servo &servo,BallDetect &ballDet){
 			gray_threshold = 18;
 			mode = 0;
+			control_mode = 0;
 			set_mode_flag = 1;
 			camera.shutterRelease();
 			servo.init(120,220);
@@ -592,13 +593,14 @@ int main(int argc,char **argv)
 		else{
 			i = 0;
 		}
-		printf("time = %6.2fms,hue=%d,gray=%d,mode=%d,sat_low=%d,%6f,%6f,%6f\n"
+		printf("time = %6.2fms,hue=%d,gray=%d,mode=%d,control_mode=%d\n"
 				,msec
 				,ballTrack.hue_threshold
 				,ballTrack.gray_threshold
 				,ballTrack.mode
-				,ballTrack.sat_threshold_low
-				,ballTrack.kp,ballTrack.ki,ballTrack.kd);
+				,ballTrack.control_mode);
+				//,ballTrack.sat_threshold_low
+				//,ballTrack.kp,ballTrack.ki,ballTrack.kd);
 
 	}
 	cv::destroyAllWindows();

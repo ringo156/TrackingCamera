@@ -12,6 +12,9 @@ Servo::Servo(){
 		close(fd);
 		return;
 	}
+	ofstream outputfile ("test.txt")
+	outputfile<<"Fuzzy Point\n";
+	outputfile<<"x, y, kp\n";
 	nowAngle[0] = 120;
 	nowAngle[1] = 120;
 	nowAngle[2] = 120;
@@ -28,6 +31,7 @@ Servo::~Servo(){
 		printf("ERROR: mumap() failed...\n");
 	}
 	close(fd);
+	outputfile.close();
 }
 void Servo::setPeriod(int num ,int period){
 	if(num > 3){
@@ -74,6 +78,7 @@ void Servo::tracking_loop(){
 			if(control_mode == 1){//Fuzzy mode
 				double res = cv::norm(devPoint);
 				kp = fuzzy.toKP(res);//kpの値を更新する
+				outputfile<<pData.x<<","<<pData.y<<","<<kp<<"\n";
 			}
 			/*
 			if((devPoint_log-devPoint_d).inside(cv::Rect(-320,-240,320,240))){
@@ -81,7 +86,8 @@ void Servo::tracking_loop(){
 			}
 			*/
 			devPoint_sum += devPoint;
-			cv::Point2f pData = devPoint * kp + devPoint_sum * ki + devPoint_d * kd;
+			//cv::Point2f
+			pData = devPoint * kp + devPoint_sum * ki + devPoint_d * kd;
 			devPoint_log = devPoint;
 			if((nowAngle[SERVO_X]+pData.x  < 200) && (nowAngle[SERVO_X]+pData.x > 40)){
 				nowAngle[SERVO_X] += pData.x;
