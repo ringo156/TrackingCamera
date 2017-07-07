@@ -33,6 +33,7 @@ class Servo{
 		int enable_servo_flag;
 		int enable_loop_flag;
 		int servo_count;
+		int control_mode;
 		cv::Point2f nowPoint;
 		cv::Point2f targetPoint;
 		cv::Point2f devPoint;
@@ -58,7 +59,7 @@ class Servo{
 		void angle(int num,double angle);
 		void init(int initangle1,int initangle2);
 		void tracking_loop();
-		void tracking(int ena_flag,cv::Point nowPoint,cv::Point targetPoint,double p,double i,double d);
+		void tracking(int ena_flag,cv::Point nowPoint,cv::Point targetPoint,double p,double i,double d, int mode);
 };
 
 #endif // __SERVO_H__

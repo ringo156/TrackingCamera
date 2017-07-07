@@ -230,6 +230,7 @@ class BTS_param{
 		int set_hard_labering_flag;
 		int print_mode;
 		int threshold_mode;
+		int control_mode;
 		int hue_max;
 		int hue_min;
 		int maxValue,max_y_line,max_x_line;
@@ -313,6 +314,14 @@ class BTS_param{
 				cin >> ki;
 				printf("kd = ");
 				cin >> kd;
+			}
+			else if(k == 'f'){//pidとFuzzyの切り替え
+				if(control_mode < 1){
+					control_mode++;
+				}
+				else{
+					control_mode = 0;
+				}
 			}
 			else{
 				//camera.lbuttoon_flag = 1;
@@ -475,7 +484,7 @@ class BTS_param{
 						servo.tracking(1,
 								center,//対象の重心(ターゲット)
 								cv::Point(camera_bin.cols*0.5,camera_bin.rows*0.5),//中心
-								kp,0,0);
+								kp,0,0,control_mode);
 					}
 					else {
 					}
@@ -492,7 +501,7 @@ class BTS_param{
 								cv::Point(max_x_line,max_y_line),
 								cv::Point(camera_bin.cols*0.5,
 									camera_bin.rows*0.5),
-								kp,ki,kd);
+								kp,ki,kd,control_mode);
 						cv::line(camera_bin,cv::Point(0,max_y_line),cv::Point(638,max_y_line),cv::Scalar(255,0,0));
 						cv::line(camera_bin,cv::Point(max_x_line,0),cv::Point(max_x_line,478),cv::Scalar(255,0,0));
 					}

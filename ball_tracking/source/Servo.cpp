@@ -71,8 +71,10 @@ void Servo::tracking_loop(){
 				return;
 			}
 			devPoint = nowPoint - targetPoint;//差の計算
-			double res = cv::norm(devPoint);
-			kp = fuzzy.toKP(res);//kpの値を更新する
+			if(control_mode == 1){//Fuzzy mode
+				double res = cv::norm(devPoint);
+				kp = fuzzy.toKP(res);//kpの値を更新する
+			}
 			/*
 			if((devPoint_log-devPoint_d).inside(cv::Rect(-320,-240,320,240))){
 				devPoint_d = devPoint_log - devPoint_d;
@@ -96,7 +98,7 @@ void Servo::tracking_loop(){
 	}
 	return;
 }
-void Servo::tracking(int ena_flag,cv::Point argNowPoint,cv::Point argTargetPoint,double argp,double argi,double argd){
+void Servo::tracking(int ena_flag,cv::Point argNowPoint,cv::Point argTargetPoint,double argp,double argi,double argd,int mode){
 	nowPoint = argNowPoint;
 	targetPoint = argTargetPoint;
 	servo_count = 0;
@@ -104,4 +106,5 @@ void Servo::tracking(int ena_flag,cv::Point argNowPoint,cv::Point argTargetPoint
 	ki = argi;
 	kd = argd;
 	enable_servo_flag = ena_flag;
+	control_mode = mode;
 }

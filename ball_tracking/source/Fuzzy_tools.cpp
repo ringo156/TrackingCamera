@@ -1,8 +1,8 @@
 #include "Fuzzy_tools.h"
 
 Fuzzy::Fuzzy(){
-  distant = 400;
-  middle = 200;
+  distant = 200;
+  middle = 100;
   close = 0;
 }
 
