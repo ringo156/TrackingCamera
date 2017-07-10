@@ -26,6 +26,7 @@ using namespace std;
 class Servo{
 	private:
 		Fuzzy fuzzy;
+		ofstream fout;
 		void *lwServo_base;
 		int fd;
 		volatile uint16_t *lwServo_addr;
@@ -42,7 +43,6 @@ class Servo{
 		cv::Point2f devPoint_d;
 		cv::Point2f devPoint_log;
 		cv::Point2f pData;
-
 		double kp;
 		double ki;
 		double kd;
