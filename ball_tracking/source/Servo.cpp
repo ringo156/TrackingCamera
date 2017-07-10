@@ -12,9 +12,9 @@ Servo::Servo(){
 		close(fd);
 		return;
 	}
-	fout.open ("test.txt"):
+	fout.open ("test.txt");
 	fout<<"Fuzzy Point\n";
-	fout<<"x, y, kp\n";
+	fout<<"mode, x, y, kp\n";
 	nowAngle[0] = 120;
 	nowAngle[1] = 120;
 	nowAngle[2] = 120;
@@ -78,7 +78,6 @@ void Servo::tracking_loop(){
 			if(control_mode == 1){//Fuzzy mode
 				double res = cv::norm(devPoint);
 				kp = fuzzy.toKP(res);//kpの値を更新する
-				fout<<pData.x<<","<<pData.y<<","<<kp<<"\n";
 			}
 			/*
 			if((devPoint_log-devPoint_d).inside(cv::Rect(-320,-240,320,240))){
@@ -86,8 +85,8 @@ void Servo::tracking_loop(){
 			}
 			*/
 			devPoint_sum += devPoint;
-			//cv::Point2f
-			pData = devPoint * kp + devPoint_sum * ki + devPoint_d * kd;
+			cv::Point2f pData = devPoint * kp + devPoint_sum * ki + devPoint_d * kd;
+			fout<<control_mode<<","<<pData.x<<","<<pData.y<<","<<kp<<"\n";
 			devPoint_log = devPoint;
 			if((nowAngle[SERVO_X]+pData.x  < 200) && (nowAngle[SERVO_X]+pData.x > 40)){
 				nowAngle[SERVO_X] += pData.x;

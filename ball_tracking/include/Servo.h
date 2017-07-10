@@ -42,7 +42,7 @@ class Servo{
 		cv::Point2f devPoint_sum;
 		cv::Point2f devPoint_d;
 		cv::Point2f devPoint_log;
-		cv::Point2f pData;
+		//cv::Point2f pData;
 		double kp;
 		double ki;
 		double kd;
